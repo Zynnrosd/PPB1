@@ -51,4 +51,16 @@ export const MedicationModel = {
     if (error) throw error;
     return { success: true };
   },
+
+    async getTotalQuantity() {
+  const { data, error } = await supabase
+    .from("medications")
+    .select("quantity");
+
+  if (error) throw error;
+
+  const total = data.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  return total;
+},
+
 };
